@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
+    header('Location: login.php');
+}
+?>
 <!doctype html>
 <html lang=pl>
 	<head>
@@ -6,7 +12,7 @@
 		<title>Admin Panel</title>
 	</head>
 	<body>
-        <button onclick="window.location.href='index.php';">Log out</button>
+        <button onclick="window.location.href='logout.php';">Log out</button>
         <form action="admin.php" method="get">
             <?php
             if(isset($_GET["searchQuery"])){
@@ -34,17 +40,33 @@
                 $result=mysqli_query($link, "SELECT * FROM ".$dbprefix."articles WHERE status='ready' ORDER BY date");
             }
 
-            while($row=mysqli_fetch_assoc($result)){
-                $title=$row["title"];
-                $content=substrwords($row["content"], 100);
-                $date=date("H:i d-m-Y", $row["date"]);
-                echo "<article class='articleBody'>";
-                echo "<h2 class='articleTitle'>$title</h2>";
-                echo "<h3 class='articleDate'>$date</h3>";
-                echo "<p class='articleContent'>$content</p>";
-                echo "</article>";
+            if($result){
+                echo "<table class='adminTable' border=1><thead><tr>";
+                echo "<th>Staus</th>";
+                echo "<th>Title</th>";
+                echo "<th>Content</th>";
+                echo "<th>Date</th>";
+                echo "<th>Actions</th>";
+                echo "</tr></thead><tbody>";
+                while($row=mysqli_fetch_assoc($result)){
+                    $id=$row["id"];
+                    $title=$row["title"];
+                    $content=substrwords($row["content"], 100);
+                    $date=date("H:i d-m-Y", $row["date"]);
+                    $status=$row["status"];
+                    echo "<tr>";
+                    echo "<td>$status</td>";
+                    echo "<td>$title</td>";
+                    echo "<td>$content</td>";
+                    echo "<td>$date</td>";
+                    echo "<td><button onclick="."window.location.href='edit.php?id=$id'".";>Edit</button>";
+                    echo "<button onclick="."window.location.href='article.php?id=$id'".";>Preview</button>";
+                    echo "<button onclick="."window.location.href='delete.php?id=$id'".";>Delete</button></td>";
+                    echo "</tr>";
+                }
+                echo "</tbody></table>";
+                mysqli_free_result($result);
             }
-            mysqli_free_result($result);
             mysqli_close($link);
         ?>
 	</body>
