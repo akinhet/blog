@@ -24,7 +24,7 @@
                     if(password_verify($password, $row["hash"])){
                         session_start();
                         $_SESSION["loggedin"] = True;
-                        $_SESSION["login"] = $login;
+                        $_SESSION["login"] = $row["id"];
                         header('Location: admin.php');
                     }else{
                         echo '<div class="loginError">Wrong password</div>';
