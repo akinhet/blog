@@ -31,14 +31,14 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
 		<title>Edit Article</title>
 	</head>
 	<body>
-        <form action="save.php">
+        <form action="save.php" method="post">
             <?php
                 echo "<label for='editTitle'>Title:</label><br>";
                 echo "<input type='text' name='editTitle' class='editTitle' value='$title'><br>";
                 echo "<label for='editContent'>Content:</label><br>";
                 echo "<textarea name='editContent' class='editContent'>$content</textarea><br>";
                 echo "<label for='editStatus'>Publish:</label>";
-                echo "<input type='checkbox' name='editStatus' class='editStatus'><br>";
+                echo "<input type='checkbox' name='editStatus' class='editStatus' value='ready'><br>";
                 echo "<input type='hidden' name='editID' value='$id'>";
             ?>
             <input type="submit" value="Save">

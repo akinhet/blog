@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(isset($_SESSION["loggedin"]) && isset($_SESSION["login"])){
+    header('Location: admin.php');
+    die();
+}
+?>
 <!doctype html>
 <html lang=pl>
 	<head>
@@ -22,7 +29,6 @@
                 }else{
                     $row=mysqli_fetch_assoc($result);
                     if(password_verify($password, $row["hash"])){
-                        session_start();
                         $_SESSION["loggedin"] = True;
                         $_SESSION["login"] = $row["id"];
                         header('Location: admin.php');

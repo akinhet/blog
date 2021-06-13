@@ -8,7 +8,7 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
     $id=$_GET["id"];
     $link=mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
     mysqli_query($link, "SET NAMES UTF8");
-    mysqli_query($link, "DELETE FROM".$dbprefix."articles WHERE id=$id");
+    mysqli_query($link, "DELETE FROM ".$dbprefix."articles WHERE id=$id");
 }
 header('Location: admin.php');
 ?>

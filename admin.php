@@ -13,7 +13,14 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
 		<title>Admin Panel</title>
 	</head>
 	<body>
+        <button onclick="window.location.href='index.php';">Main page</button>
         <button onclick="window.location.href='logout.php';">Log out</button>
+        <button onclick="window.location.href='add.php';">Add new article</button>
+        <?php
+            if($_SESSION["login"]=="1"){
+                echo "<button onclick="."window.location.href='register.php';".">Register new user</button>";
+            }
+        ?>
         <form action="admin.php" method="get">
             <?php
             if(isset($_GET["searchQuery"])){
@@ -36,17 +43,19 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
             mysqli_query($link, "SET NAMES UTF8");
 
             if(isset($search)){
-                $result=mysqli_query($link, "SELECT * FROM ".$dbprefix."articles WHERE status='ready' AND content LIKE '%$search%' OR title LIKE '%$search%' ORDER BY date");
+                $result=mysqli_query($link, "SELECT ".$dbprefix."articles.*, login FROM ".$dbprefix."articles, ".$dbprefix."accounts WHERE author=".$dbprefix."accounts.id AND (content LIKE '%$search%' OR title LIKE '%$search%') ORDER BY date DESC");
             }else{
-                $result=mysqli_query($link, "SELECT * FROM ".$dbprefix."articles WHERE status='ready' ORDER BY date");
+                $result=mysqli_query($link, "SELECT ".$dbprefix."articles.*, login FROM ".$dbprefix."articles, ".$dbprefix."accounts WHERE author=".$dbprefix."accounts.id ORDER BY date DESC");
             }
 
             if($result){
                 echo "<table class='adminTable' border=1><thead><tr>";
-                echo "<th>Staus</th>";
+                echo "<th>Status</th>";
+                echo "<th>Author</th>";
                 echo "<th>Title</th>";
                 echo "<th>Content</th>";
                 echo "<th>Date</th>";
+                echo "<th>Number of reads</th>";
                 echo "<th>Actions</th>";
                 echo "</tr></thead><tbody>";
                 while($row=mysqli_fetch_assoc($result)){
@@ -55,11 +64,15 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
                     $content=substrwords($row["content"], 100);
                     $date=date("H:i d-m-Y", $row["date"]);
                     $status=$row["status"];
+                    $author=$row["login"];
+                    $reads=$row["readCount"];
                     echo "<tr>";
                     echo "<td>$status</td>";
+                    echo "<td>$author</td>";
                     echo "<td>$title</td>";
                     echo "<td>$content</td>";
                     echo "<td>$date</td>";
+                    echo "<td>$reads</td>";
                     echo "<td><button onclick="."window.location.href='edit.php?id=$id'".";>Edit</button>";
                     echo "<button onclick="."window.location.href='article.php?id=$id'".";>Preview</button>";
                     echo "<button onclick="."window.location.href='delete.php?id=$id'".";>Delete</button></td>";
