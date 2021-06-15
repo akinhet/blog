@@ -21,7 +21,7 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
                 <textarea name='addContent' class='addContent'></textarea><br>
                 <label for='addStatus'>Publish:</label>
                 <input type='checkbox' name='addStatus' class='addStatus' value='ready'><br>
-                <input type="submit" value="Save">
+                <input type="submit" value="Save" class="button" style="margin: 10px 0;">
             </form>
         </div>
     </body>

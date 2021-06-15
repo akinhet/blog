@@ -9,10 +9,17 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"]) || $_SESSION["log
     require_once("conf.php");
     $link=mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
     mysqli_query($link, "SET NAMES UTF8");
-    $result=mysqli_query($link, "INSERT INTO ".$dbprefix."accounts VALUES(NULL,'$login','$hash')");
-    mysqli_free_result($result);
-    mysqli_close($link);
-    header('Location: admin.php');
+    $result=mysqli_query($link, "SELECT * FROM ".$dbprefix."accounts WHERE login='$login'");
+    if(mysqli_num_rows($result)==0){
+        mysqli_query($link, "INSERT INTO ".$dbprefix."accounts VALUES(NULL,'$login','$hash')");
+        mysqli_free_result($result);
+        mysqli_close($link);
+        header('Location: admin.php');
+    }else{
+        $error="This login was already taken.";
+        mysqli_free_result($result);
+        mysqli_close($link);
+    }
 }
 ?>
 <!doctype html>
@@ -24,6 +31,11 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"]) || $_SESSION["log
 	</head>
     <body>
         <button onclick="window.location.href='admin.php';" class="button">Go back</button>
+        <?php
+        if(isset($error)){
+            echo "<p class='notification'>".$error."</p>";
+        }
+        ?>
         <div class="previewBody">
             <form action="register.php" method="post">
                 <label for="registerLogin">Login: </label>
