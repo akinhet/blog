@@ -31,17 +31,20 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
 		<title>Edit Article</title>
 	</head>
 	<body>
-        <form action="save.php" method="post">
-            <?php
-                echo "<label for='editTitle'>Title:</label><br>";
-                echo "<input type='text' name='editTitle' class='editTitle' value='$title'><br>";
-                echo "<label for='editContent'>Content:</label><br>";
-                echo "<textarea name='editContent' class='editContent'>$content</textarea><br>";
-                echo "<label for='editStatus'>Publish:</label>";
-                echo "<input type='checkbox' name='editStatus' class='editStatus' value='ready'><br>";
-                echo "<input type='hidden' name='editID' value='$id'>";
-            ?>
-            <input type="submit" value="Save">
-        </form>
+        <button onclick="window.location.href='admin.php';" class="button">Go back</button>
+        <div class='previewBody'>
+            <form action="save.php" method="post">
+                <?php
+                    echo "<label>Title:</label><br>";
+                    echo "<input type='text' name='editTitle' class='editTitle' value='$title'><br>";
+                    echo "<label>Content:</label><br>";
+                    echo "<textarea name='editContent' class='editContent'>$content</textarea><br>";
+                    echo "<label>Publish:</label>";
+                    echo "<input type='checkbox' name='editStatus' class='editStatus' value='ready'><br>";
+                    echo "<input type='hidden' name='editID' value='$id'>";
+                ?>
+                <input type="submit" class="button" style="margin: 10px 0;" value="Save">
+            </form>
+        </div>
     </body>
 </html>

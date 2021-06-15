@@ -12,14 +12,17 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
 		<title>Add Article</title>
 	</head>
 	<body>
-        <form action="save.php" method="post">
-            <label for='addTitle'>Title:</label><br>
-            <input type='text' name='addTitle' class='addTitle'><br>
-            <label for='addContent'>Content:</label><br>
-            <textarea name='addContent' class='addContent'></textarea><br>
-            <label for='addStatus'>Publish:</label>
-            <input type='checkbox' name='addStatus' class='addStatus' value='ready'><br>
-            <input type="submit" value="Save">
-        </form>
+        <button onclick="window.location.href='admin.php';" class="button">Go back</button>
+        <div class='previewBody'>
+            <form action="save.php" method="post">
+                <label for='addTitle'>Title:</label><br>
+                <input type='text' name='addTitle' class='addTitle'><br>
+                <label for='addContent'>Content:</label><br>
+                <textarea name='addContent' class='addContent'></textarea><br>
+                <label for='addStatus'>Publish:</label>
+                <input type='checkbox' name='addStatus' class='addStatus' value='ready'><br>
+                <input type="submit" value="Save">
+            </form>
+        </div>
     </body>
 </html>

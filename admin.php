@@ -13,14 +13,19 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
 		<title>Admin Panel</title>
 	</head>
 	<body>
-        <button onclick="window.location.href='index.php';">Main page</button>
-        <button onclick="window.location.href='logout.php';">Log out</button>
-        <button onclick="window.location.href='add.php';">Add new article</button>
+        <header class="top">
+            <h1 class="title" onclick="window.location.href='index.php'">Admin Panel</h1>
+        </header>
+        <nav class="navbar" style="min-height: 100px;">
+            <button class='nav-selections' style="margin: 0 6%;" onclick="window.location.href='logout.php';">Log out</button>
         <?php
             if($_SESSION["login"]=="1"){
-                echo "<button onclick="."window.location.href='register.php';".">Register new user</button>";
+                echo "<button class='nav-selections' style='margin: 0 5%;' onclick="."window.location.href='register.php';".">Register new user</button>";
             }
         ?>
+            <button class='nav-selections' style="margin: 0 6%;" onclick="window.location.href='upload.php';">Upload an image</button>
+            <button class='nav-selections' style="margin: 0 6%;" onclick="window.location.href='add.php';">Add new article</button>
+            <button class='nav-selections' style="margin: 0 6%;" onclick="window.location.href='index.php';">Main page</button>
         <form action="admin.php" method="get">
             <?php
             if(isset($_GET["searchQuery"])){
@@ -30,10 +35,9 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
                 echo "<input type='text' name='searchQuery' class='searchQuery'>";
             }
             ?>
-            <button type="submit" class="searchButton">
-                <img src="searchicon.png">
-            </button>
+            <button type="submit" class="searchButton">search</button>
         </form>
+        </nav>
         <?php
             require_once("conf.php");
             require_once("functions.php");
@@ -49,7 +53,7 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
             }
 
             if($result){
-                echo "<table class='adminTable' border=1><thead><tr>";
+                echo "<table class='adminTable'><thead><tr>";
                 echo "<th>Status</th>";
                 echo "<th>Author</th>";
                 echo "<th>Title</th>";
@@ -73,9 +77,9 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
                     echo "<td>$content</td>";
                     echo "<td>$date</td>";
                     echo "<td>$reads</td>";
-                    echo "<td><button onclick="."window.location.href='edit.php?id=$id'".";>Edit</button>";
-                    echo "<button onclick="."window.location.href='article.php?id=$id'".";>Preview</button>";
-                    echo "<button onclick="."window.location.href='delete.php?id=$id'".";>Delete</button></td>";
+                    echo "<td><button class='tableButton' onclick="."window.location.href='edit.php?id=$id'".";>Edit</button>";
+                    echo "<button class='tableButton' onclick="."window.location.href='article.php?id=$id'".";>Preview</button>";
+                    echo "<button class='tableButton' onclick="."window.location.href='delete.php?id=$id'".";>Delete</button></td>";
                     echo "</tr>";
                 }
                 echo "</tbody></table>";
@@ -83,5 +87,11 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"])){
             }
             mysqli_close($link);
         ?>
+        <footer>
+            <div class="footer-selection">Facebook</div>
+            <div class="footer-selection">Instagram</div>
+            <div class="footer-selection">Discord</div>
+            <div class="copyright">Copyright © 2020 Piotr Zieniewicz</div>
+        </footer>
 	</body>
 </html>

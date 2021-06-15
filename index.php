@@ -2,17 +2,22 @@
 <html lang=pl>
 	<head>
 		<meta charset="utf-8">
+        <link href='https://fonts.googleapis.com/css?family=Anonymous Pro' rel='stylesheet'>
 		<link rel="stylesheet" href="styl.css">
-		<title>Mój blog</title>
+		<title>My blog</title>
 	</head>
 	<body>
+        <header class="top">
+            <h1 class="title" onclick="window.location.href='index.php'">My blog</h1>
+        </header>
+        <nav class="navbar">
         <?php
             session_start();
             if(isset($_SESSION["loggedin"]) && isset($_SESSION["login"])){
-                echo "<button onclick="."window.location.href='admin.php';".">Admin Panel</button>";
-                echo "<button onclick="."window.location.href='logout.php';".">Log out</button>";
+                echo "<button class='nav-selections' onclick="."window.location.href='admin.php';".">Admin Panel</button>";
+                echo "<button class='nav-selections' onclick="."window.location.href='logout.php';".">Log out</button>";
             }else{
-                echo "<button onclick="."window.location.href='login.php';".">Log in</button>";
+                echo "<button class='nav-selections' onclick="."window.location.href='login.php';".">Log in</button>";
             }
         ?>
         <form action="index.php" method="get">
@@ -24,10 +29,9 @@
                 echo "<input type='text' name='searchQuery' class='searchQuery'>";
             }
             ?>
-            <button type="submit" class="searchButton">
-                <img src="searchicon.png">
-            </button>
+            <button type="submit" class="searchButton">search</button>
         </form>
+        </nav>
         <?php
             require_once("conf.php");
             require_once("functions.php");
@@ -42,7 +46,7 @@
             $id=$row["id"];
             $title=$row["title"];
             $author=$row["login"];
-            $content=substrwords($row["content"], 100);
+            $content=substrwords($row["content"], 300);
             $date=date("H:i d m Y", $row["date"]);
             echo "<h1 class='indexPopular'>Our most popular article</h1>";
             echo "<article class='articleBody' onclick="."window.location.href='article.php?id=$id';".">";
@@ -62,7 +66,7 @@
                 $id=$row["id"];
                 $title=$row["title"];
                 $author=$row["login"];
-                $content=substrwords($row["content"], 100);
+                $content=substrwords($row["content"], 300);
                 $date=date("H:i d m Y", $row["date"]);
                 echo "<article class='articleBody' onclick="."window.location.href='article.php?id=$id';".">";
                 echo "<h1 class='articleTitle'>$title</h1>";
@@ -74,5 +78,11 @@
             mysqli_free_result($result);
             mysqli_close($link);
         ?>
+        <footer>
+            <div class="footer-selection">Facebook</div>
+            <div class="footer-selection">Instagram</div>
+            <div class="footer-selection">Discord</div>
+            <div class="copyright">Copyright © 2020 Piotr Zieniewicz</div>
+        </footer>
 	</body>
 </html>

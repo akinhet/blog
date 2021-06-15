@@ -23,12 +23,15 @@ if(!isset($_SESSION["loggedin"]) || !isset($_SESSION["login"]) || $_SESSION["log
 		<title>Admin Panel</title>
 	</head>
     <body>
-        <form action="register.php" method="post">
-            <label for="registerLogin">Login: </label>
-            <input type="text" name="login" id="registerLogin"><br>
-            <label for="registerPassword">Password: </label>
-            <input type="password" name="password" id="registerPassword"><br>
-            <button type="submit" class="registerButton">Register</button>
-        </form>
+        <button onclick="window.location.href='admin.php';" class="button">Go back</button>
+        <div class="previewBody">
+            <form action="register.php" method="post">
+                <label for="registerLogin">Login: </label>
+                <input type="text" name="login" id="registerLogin"><br>
+                <label for="registerPassword">Password: </label>
+                <input type="password" name="password" id="registerPassword"><br>
+                <button type="submit" class="button" style="margin: 15px 0;">Register</button>
+            </form>
+        </div>
     </body>
 </html>

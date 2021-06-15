@@ -13,6 +13,7 @@ if(isset($_SESSION["loggedin"]) && isset($_SESSION["login"])){
 		<title>Zaloguj się</title>
 	</head>
     <body>
+        <button onclick="window.location.href='index.php';" class="button">Go back</button>
         <?php
             if(isset($_POST["login"]) && isset($_POST["password"])){
                 require_once("conf.php");
@@ -25,7 +26,7 @@ if(isset($_SESSION["loggedin"]) && isset($_SESSION["login"])){
                 mysqli_query($link, "SET NAMES UTF8");
                 $result=mysqli_query($link, "SELECT * FROM ".$dbprefix."accounts WHERE login='$login'");
                 if(!$result){
-                    echo '<div class="loginError">Unknown login</div>';
+                    echo '<div class="notification">Unknown login</div>';
                 }else{
                     $row=mysqli_fetch_assoc($result);
                     if(password_verify($password, $row["hash"])){
@@ -33,18 +34,19 @@ if(isset($_SESSION["loggedin"]) && isset($_SESSION["login"])){
                         $_SESSION["login"] = $row["id"];
                         header('Location: admin.php');
                     }else{
-                        echo '<div class="loginError">Wrong password</div>';
+                        echo '<div class="notification">Wrong password</div>';
                     }        
                 }
                 mysqli_free_result($result);
                 mysqli_close($link);
             }
         ?>
-        <form action="login.php" method="POST" class="loginForm">
-            <input type="text" placeholder="Login" name="login" class="login" required><br>
-            <input type="password" placeholder="Password" name="password" class="password" required><br>
-            <input type="submit" value="Log in" class="loginSubmit"><br>
-        </form>
-        <button onclick="window.location.href='index.php';">Go back</button>
+        <div class="previewBody">
+            <form action="login.php" method="POST" class="loginForm">
+                <input type="text" placeholder="Login" name="login" class="login" required><br>
+                <input type="password" placeholder="Password" name="password" class="password" required><br>
+                <input type="submit" value="Log in" class="button" style="margin: 15px 0;"><br>
+            </form>
+        </div>
     </body>
 </html>
